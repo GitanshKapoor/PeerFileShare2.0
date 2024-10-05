@@ -3,117 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PeerFileShare 2.0</title>
-    <link rel="shortcut icon" type="image/png" href="icon.png">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            color: #4A90E2;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        h2 {
-            color: #333;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-        }
-
-        form {
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-        }
-
-        input[type="file"] {
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        #uploadStatus {
-            margin-top: 20px;
-            font-weight: bold;
-            color: #4A90E2;
-        }
-
-        footer {
-            margin-top: 40px;
-            font-size: 0.9em;
-            color: #666;
-        }
-    </style>
+    <title>File Upload to Azure Blob Storage</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 </head>
 <body>
-    <h1>PeerFileShare 2.0</h1>
-    <h2>Upload a File</h2>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" id="fileInput" required>
-        <button type="button" onclick="uploadFile()">Upload</button>
-    </form>
-    <p id="uploadStatus"></p>
+    <h1>Upload File</h1>
+    <input type="file" id="fileInput" />
+    <button id="uploadButton">Upload</button>
+    <p id="link"></p>
 
-    <script src="https://unpkg.com/@azure/storage-blob@latest/dist/azure-storage-blob.min.js"></script>
-    <script>
-        // Azure Storage account and container details
-        const accountName = 'peerfileshare';
-        const sasToken = '?sv=2022-11-02&ss=b&srt=co&sp=rwtfx&se=2026-10-05T13:40:36Z&st=2024-10-05T05:40:36Z&spr=https,http&sig=D7gPQwKz5uO1s9Z05ngplc82UheUnf5F6B4ZQFjpP%2Fo%3D';
-        const containerName = 'uploads';
-
-        // Create BlobServiceClient using the account name and SAS token
-        const { BlobServiceClient } = Azure.Storage.Blobs;
-        const blobServiceClient = new BlobServiceClient(`https://${accountName}.blob.core.windows.net${sasToken}`);
-        const containerClient = blobServiceClient.getContainerClient(containerName);
-
-        async function uploadFile() {
-            const file = document.getElementById('fileInput').files[0];
-            if (!file) {
-                alert("Please select a file.");
-                return;
-            }
-
-            const blobClient = containerClient.getBlockBlobClient(file.name);
-
-            try {
-                await blobClient.uploadBrowserFile(file);
-                document.getElementById('uploadStatus').innerText = `File uploaded successfully: ${file.name}`;
-            } catch (error) {
-                document.getElementById('uploadStatus').innerText = `Upload failed: ${error.message}`;
-            }
-        }
-    </script>
-
-    <footer>
-        &copy; 2024 PeerFileShare 2.0. All rights reserved.
-    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
