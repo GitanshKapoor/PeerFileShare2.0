@@ -84,8 +84,8 @@
     <script>
         const { BlobServiceClient } = require('@azure/storage-blob');
 
-        const accountName = 'your_storage_account_name';
-        const sasToken = 'your_sas_token';
+        const accountName = 'peerfileshare';
+        const sasToken = 'sv=2022-11-02&ss=b&srt=co&sp=rwtfx&se=2026-10-05T13:40:36Z&st=2024-10-05T05:40:36Z&spr=https,http&sig=D7gPQwKz5uO1s9Z05ngplc82UheUnf5F6B4ZQFjpP%2Fo%3D';
         const containerName = 'uploads';
 
         const blobServiceClient = new BlobServiceClient(`https://${accountName}.blob.core.windows.net/?${sasToken}`);
